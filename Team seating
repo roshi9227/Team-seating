@@ -1,0 +1,50 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Team Seating Arrangement</title>
+    <script>
+        function assignSeats() {
+            const teamName = document.getElementById("teamName").value;
+            if (!teamName) {
+                alert("Please enter your team name");
+                return;
+            }
+
+            let members = document.getElementById("teamMembers").value.split("\n").filter(name => name.trim() !== "");
+            if (members.length !== 12) {
+                alert("Each team must have 12 members");
+                return;
+            }
+            
+            members = members.sort(() => Math.random() - 0.5);
+            
+            let seatingChart = "<h3>Seating for " + teamName + "</h3><table border='1' style='width: 50%; text-align: center;'>";
+            for (let i = 0; i < 3; i++) {
+                seatingChart += "<tr>";
+                for (let j = 0; j < 4; j++) {
+                    let seatNumber = i * 4 + j;
+                    seatingChart += "<td>" + (members[seatNumber] || "Empty") + "</td>";
+                }
+                seatingChart += "</tr>";
+            }
+            seatingChart += "</table>";
+
+            document.getElementById("seatingChart").innerHTML = seatingChart;
+        }
+    </script>
+</head>
+<body>
+    <h2>Enter Your Team Details</h2>
+    <label>Team Name:</label>
+    <input type="text" id="teamName" placeholder="Enter Team Name" /><br><br>
+    
+    <label>Enter Team Members (12 names, one per line):</label><br>
+    <textarea id="teamMembers" rows="12" cols="30" placeholder="Enter names here..."></textarea><br><br>
+    
+    <button onclick="assignSeats()">Generate Seating</button>
+    
+    <div id="seatingChart" style="margin-top: 20px;"></div>
+</body>
+</html>
